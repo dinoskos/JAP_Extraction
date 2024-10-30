@@ -1,0 +1,109 @@
+\documentclass{article}
+\usepackage{hyperref}
+
+\title{PDF Metadata Extractor}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Overview}
+
+This project extracts metadata from PDF files and renames them according to APA conventions based on author names and publication years. It processes PDF files in a specified directory, extracts DOIs from the content, fetches metadata using the Crossref API, and renames the files to follow APA formatting.
+
+\section*{Features}
+
+\begin{itemize}
+    \item Extracts text from PDF files using the PyPDF2 library.
+    \item Identifies DOIs from the extracted text.
+    \item Retrieves metadata (author names and publication year) from Crossref.
+    \item Renames PDF files in the specified folder based on APA naming conventions:
+    \begin{itemize}
+        \item \textbf{One author:} \texttt{lastname\_year.pdf}
+        \item \textbf{Two authors:} \texttt{lastname1\_\&\_lastname2\_year.pdf}
+        \item \textbf{Three or more authors:} \texttt{lastname1\_et\_al\_year.pdf}
+    \end{itemize}
+\end{itemize}
+
+\section*{Requirements}
+
+\begin{itemize}
+    \item Python 3.6 or higher
+    \item Required Python packages:
+    \begin{itemize}
+        \item PyPDF2
+        \item requests
+        \item ratelimit
+    \end{itemize}
+\end{itemize}
+
+Install the required packages:
+
+\begin{verbatim}
+pip install PyPDF2 requests ratelimit
+\end{verbatim}
+
+\section*{How It Works}
+
+\begin{enumerate}
+    \item \textbf{PDF Text Extraction:} The script extracts text from the first page of each PDF file in the specified folder.
+    \item \textbf{DOI Identification:} It searches for a DOI in the extracted text using a regular expression.
+    \item \textbf{Metadata Retrieval:} Using the identified DOI, the script retrieves author names and the publication year from Crossref.
+    \item \textbf{File Renaming:} The PDF files are renamed based on APA conventions, depending on the number of authors and publication year.
+\end{enumerate}
+
+\section*{Usage}
+
+\begin{enumerate}
+    \item Place all PDF files in a directory named \texttt{data}, located one level above the script directory.
+    \item Run the main script:
+
+    \begin{verbatim}
+    python main.py
+    \end{verbatim}
+    
+    \item The script will process each PDF, extract the metadata, and rename the files based on APA conventions.
+\end{enumerate}
+
+\section*{Example Output}
+
+For a PDF with:
+\begin{itemize}
+    \item One author named ``John Doe'' and published in 2020, the file is renamed to: \texttt{Doe\_2020.pdf}
+    \item Two authors named ``Jane Smith'' and ``Alice Johnson'' published in 2019, the file is renamed to: \texttt{Smith\_\&\_Johnson\_2019.pdf}
+    \item Three authors named ``Robert Brown,'' ``Emily Clark,'' and ``Michael Davis'' published in 2021, the file is renamed to: \texttt{Brown\_et\_al\_2021.pdf}
+\end{itemize}
+
+\section*{Error Handling}
+
+\begin{itemize}
+    \item If the script cannot extract text from a PDF, it will print an error message and continue to the next file.
+    \item If no DOI is found in the PDF, the file will not be renamed.
+    \item If metadata cannot be retrieved from Crossref, the file will not be renamed, and an error message will be displayed.
+\end{itemize}
+
+\section*{Limitations}
+
+\begin{itemize}
+    \item The project currently extracts text only from the first page of each PDF, which may not always contain the DOI.
+    \item It depends on Crossref for metadata retrieval, so the project might not work for documents not indexed by Crossref or those with invalid DOIs.
+\end{itemize}
+
+\section*{Future Improvements}
+
+\begin{itemize}
+    \item Extend text extraction to multiple pages for better DOI detection.
+    \item Add error logging for better debugging and monitoring.
+    \item Enhance DOI pattern matching for more robust extraction.
+\end{itemize}
+
+\section*{Contributing}
+
+Contributions are welcome! Feel free to open issues or submit pull requests to improve this project.
+
+\section*{License}
+
+This project is licensed under the MIT License.
+
+\end{document}
