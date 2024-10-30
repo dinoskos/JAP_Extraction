@@ -62,7 +62,7 @@ pip install PyPDF2 requests ratelimit
     \begin{verbatim}
     python main.py
     \end{verbatim}
-    
+
     \item The script will process each PDF, extract the metadata, and rename the files based on APA conventions.
 \end{enumerate}
 
